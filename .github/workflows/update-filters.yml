@@ -1,0 +1,45 @@
+name: Update and Release AdBlock Filters
+
+on:
+  schedule:
+    # Запуск каждый день в 03:00 UTC
+    - cron: '0 3 * * *'
+  workflow_dispatch: # Позволяет запустить вручную из интерфейса GitHub
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download filter lists
+        run: |
+          # Скачиваем исходные файлы
+          curl -L -o ruadlist_main.txt https://easylist-downloads.adblockplus.org/advblock.txt
+          curl -L -o ruadlist_counters.txt https://easylist-downloads.adblockplus.org/cntblock.txt
+          curl -L -o easylist.txt https://easylist-downloads.adblockplus.org/easylist.txt
+          echo "Download completed."
+
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y.%m.%d')" >> $GITHUB_OUTPUT
+    
+      - uses: ncipollo/release-action@v1
+        with:
+          name: "Filter List Update ${{ steps.date.outputs.date }}"
+          artifacts: "ruadlist_main.txt,ruadlist_counters.txt,easylist.txt"
+          tag: "v${{ steps.date.outputs.date }}"
+          bodyFile: ".github/release-body.md"
+          allowUpdates: true
+          makeLatest: true 
+
+      - name: Update 'latest' git tag
+        uses: EndBug/latest-tag@latest
+        with:
+          tag-name: latest
+          description: Always points to the latest filter list release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
