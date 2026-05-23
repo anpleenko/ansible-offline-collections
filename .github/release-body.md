@@ -1,4 +1,34 @@
-Автоматическое обновление фильтров.
-- RU AdList (основной): [ссылка](https://easylist-downloads.adblockplus.org/advblock.txt)
-- RU AdList (счетчики): [ссылка](https://easylist-downloads.adblockplus.org/cntblock.txt)
-- EasyList: [ссылка](https://easylist-downloads.adblockplus.org/easylist.txt)
+# Официальные ссылки на коллекции Ansible
+
+Список официальных коллекций с документацией и репозиториями на GitHub.
+
+## Коллекции
+
+### 1. `ansible.posix`
+- **Документация**: [docs.ansible.com/ansible.posix](https://docs.ansible.com/projects/ansible/latest/collections/ansible/posix/index.html)
+- **Репозиторий**: [github.com/ansible-collections/ansible.posix](https://github.com/ansible-collections/ansible.posix)
+
+### 2. `community.general`
+- **Документация**: [docs.ansible.com/community.general](https://docs.ansible.com/ansible/latest/collections/community/general/index.html)
+- **Репозиторий**: [github.com/ansible-collections/community.general](https://github.com/ansible-collections/community.general)
+
+### 3. `community.mysql`
+- **Документация**: [docs.ansible.com/community.mysql](https://docs.ansible.com/ansible/latest/collections/community/mysql/index.html)
+- **Репозиторий**: [github.com/ansible-collections/community.mysql](https://github.com/ansible-collections/community.mysql)
+
+### 4. `community.crypto`
+- **Документация**: [docs.ansible.com/community.crypto](https://docs.ansible.com/ansible/latest/collections/community/crypto/index.html)
+- **Репозиторий**: [github.com/ansible-collections/community.crypto](https://github.com/ansible-collections/community.crypto)
+
+### 5. `community.proxmox`
+- **Документация**: [docs.ansible.com/community.proxmox](https://docs.ansible.com/ansible/latest/collections/community/proxmox/index.html)
+- **Репозиторий**: [github.com/ansible-collections/community.proxmox](https://github.com/ansible-collections/community.proxmox)
+
+---
+
+## Быстрая установка
+
+Установка любой коллекции выполняется командой:
+
+```bash
+ansible-galaxy collection install <имя_коллекции>

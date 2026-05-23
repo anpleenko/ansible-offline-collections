@@ -1,9 +1,8 @@
-name: Update and Release AdBlock Filters
+name: Update and Release Ansible galaxy collections
 
 on:
   schedule:
-    # Запуск каждый день в 03:00 UTC
-    - cron: '0 3 * * *'
+    - cron: '0 3 * * *' # Запуск каждый день в 03:00 UTC
   workflow_dispatch: # Позволяет запустить вручную из интерфейса GitHub
 
 jobs:
@@ -15,22 +14,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download filter lists
-        run: |
-          # Скачиваем исходные файлы
-          curl -L -o ruadlist_main.txt https://easylist-downloads.adblockplus.org/advblock.txt
-          curl -L -o ruadlist_counters.txt https://easylist-downloads.adblockplus.org/cntblock.txt
-          curl -L -o easylist.txt https://easylist-downloads.adblockplus.org/easylist.txt
-          echo "Download completed."
-
+      - uses: BSFishy/pip-action@v1
+        with:
+          requirements: requirements.txt
+      
       - name: Get current date
         id: date
         run: echo "date=$(date +'%Y.%m.%d')" >> $GITHUB_OUTPUT
-    
+      
+      - name: Download collections
+        run: ansible-galaxy collection download -r requirements.yml -p offline-collections
+
+      - name: Compress folder with tar
+        run: tar -czf offline-collections.tar.gz ./offline-collections
+
       - uses: ncipollo/release-action@v1
         with:
-          name: "Filter List Update ${{ steps.date.outputs.date }}"
-          artifacts: "ruadlist_main.txt,ruadlist_counters.txt,easylist.txt"
+          name: "Ansible galaxy offline collection ${{ steps.date.outputs.date }}"
+          artifacts: "offline-collections.tar.gz"
           tag: "v${{ steps.date.outputs.date }}"
           bodyFile: ".github/release-body.md"
           allowUpdates: true
