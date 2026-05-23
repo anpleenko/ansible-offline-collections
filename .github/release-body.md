@@ -12,15 +12,7 @@
 - **Документация**: [docs.ansible.com/community.general](https://docs.ansible.com/ansible/latest/collections/community/general/index.html)
 - **Репозиторий**: [github.com/ansible-collections/community.general](https://github.com/ansible-collections/community.general)
 
-### 3. `community.mysql`
-- **Документация**: [docs.ansible.com/community.mysql](https://docs.ansible.com/ansible/latest/collections/community/mysql/index.html)
-- **Репозиторий**: [github.com/ansible-collections/community.mysql](https://github.com/ansible-collections/community.mysql)
-
-### 4. `community.crypto`
-- **Документация**: [docs.ansible.com/community.crypto](https://docs.ansible.com/ansible/latest/collections/community/crypto/index.html)
-- **Репозиторий**: [github.com/ansible-collections/community.crypto](https://github.com/ansible-collections/community.crypto)
-
-### 5. `community.proxmox`
+### 3. `community.proxmox`
 - **Документация**: [docs.ansible.com/community.proxmox](https://docs.ansible.com/ansible/latest/collections/community/proxmox/index.html)
 - **Репозиторий**: [github.com/ansible-collections/community.proxmox](https://github.com/ansible-collections/community.proxmox)
 
@@ -32,3 +24,4 @@
 
 ```bash
 ansible-galaxy collection install <имя_коллекции>
+```
