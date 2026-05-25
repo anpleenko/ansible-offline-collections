@@ -11,30 +11,36 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       
       - name: Get current date
         id: date
         run: echo "date=$(date +'%Y.%m.%d')" >> $GITHUB_OUTPUT
       
-      - name: Download collections
-        run: ansible-galaxy collection download -r requirements.yml -p offline-collections
+      - run: ansible-galaxy collection download -r requirements.yml -p offline-collections
+      - run: tar -czf offline-collections.tar.gz ./offline-collections
 
-      - name: Compress folder with tar
-        run: tar -czf offline-collections.tar.gz ./offline-collections
+      - run: echo "\`\`\`" >> collections_list.md
+      - run: echo "$(cat requirements.yml)" >> collections_list.md
+      - run: echo "\`\`\`" >> collections_list.md
+      - run: echo "" >> collections_list.md
+      - run: echo "\`\`\`" >> collections_list.md
+      - run: echo "wget https://github.com/anpleenko/ansible-offline-collections/releases/download/v${{ steps.date.outputs.date }}/offline-collections.tar.gz" >> collections_list.md
+      - run: echo "tar -xvzf offline-collections.tar.gz" >> collections_list.md
+      - run: echo "cd offline-collections" >> collections_list.md
+      - run: echo "ansible-galaxy collection install -r requirements.yml" >> collections_list.md
+      - run: echo "\`\`\`" >> collections_list.md
 
       - uses: ncipollo/release-action@v1
         with:
           name: "Ansible galaxy offline collection ${{ steps.date.outputs.date }}"
           artifacts: "offline-collections.tar.gz"
           tag: "v${{ steps.date.outputs.date }}"
-          bodyFile: ".github/release-body.md"
+          bodyFile: "collections_list.md"
           allowUpdates: true
           makeLatest: true 
-
-      - name: Update 'latest' git tag
-        uses: EndBug/latest-tag@latest
+      
+      - uses: EndBug/latest-tag@latest
         with:
           tag-name: latest
           description: Always points to the latest filter list release
