@@ -2,7 +2,7 @@ name: Update and Release Ansible galaxy collections
 
 on:
   schedule:
-    - cron: '0 3 * * *' # Запуск каждый день в 03:00 UTC
+    - cron: '0 3 * * 1'
   workflow_dispatch: # Позволяет запустить вручную из интерфейса GitHub
 
 jobs:
